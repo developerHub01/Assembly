@@ -9,9 +9,13 @@ MAX_VAL  DW 1 DUP<?>;
 STP_VAL  DW 1 DUP<?>;
 NUM_VAL  DW 1 DUP<?>;         
 
-MOV SRT_VAL[0], 1;
-MOV CUR_VAL[0], 1;
-MOV END_VAL[0], 10;
+MOV SRT_VAL[0], 3;
+MOV END_VAL[0], 4;
+;MOV CUR_VAL[0], 100;
+MOV AX, SRT_VAL[0];
+MOV CUR_VAL[0], AX;
+
+XOR AX, AX;
 
  
 JMP START 
@@ -129,7 +133,9 @@ FINISH:
     CALL PRINT_NUM_UNS;
     PRINT " "
     MOV AX, MAX_VAL[0];
-    CALL PRINT_NUM_UNS; 
+    CALL PRINT_NUM_UNS;  
+    PRINTN "" 
+    PRINT "THANKS"
      
   
 
