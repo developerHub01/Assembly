@@ -8,8 +8,8 @@ MAIN_LOOP_INDEX DB 10        ;; MAIN LOOP INDEX
         
 MOV AX, 0 ;; FOR OPERATIONS
 MOV BL, 0 
-MOV CX, 0
-MOV DX, 10 ;; CURRENT NUMBER
+MOV CX, 10  ;; CURRENT NUMBER
+MOV DX, 0 
           
 
 JMP START
@@ -20,43 +20,64 @@ EVEN_ODD_CHECKER:
     INC AL;
     
     MOV STEPS[0], AL     
-         
-
-    MOV AX, DX
-    MOV CX, 2                   
     
-    DIV CX
-    CMP AL, 0
-    JE ODD;
-    CMP AL, 1
-    JE EVEN 
+    MOV AX, CX 
+    
+    MOV BX, 2
+         
+    PRINT "VALUE === "    
+    CALL PRINT_NUM_UNS                   
+    PRINTN 
+     
+    DIV BX
+    MOV AL, AH 
+    ;PRINT "REMINDER ----------->"  
+    ;CALL PRINT_NUM_UNS
+    ;PRINTN
+    
+    TEST DX, DX
+    JZ EVEN
+    JMP ODD
+    ;CMP AL, 0
+    ;JE ODD;
+    ;JMP EVEN 
         
  
-EVEN: 
-    MOV DX, 10
-    MOV CX, 3;
-    MUL CX
-    INC DX 
+EVEN:  
+    PRINT "EVEN VALUE ----------->"  
+    PRINTN
+    MOV AX, CX
+    MOV BX, 3;
+    MUL BX
     
-    MOV AX, DX
+    MOV CX, AX
     
+    INC CX 
+    
+    MOV AX, CX   
+    
+    PRINT " EVEN "
     CALL PRINT_NUM_UNS
-    PRINT " "
+    PRINTN
     
     JMP STEP_COUNTER_LOOP
     
     
-ODD:    
-    MOV AX, DX
-    MOV CX, 2                   
+ODD:     
+    PRINT "ODD VALUE ----------->" 
+    PRINTN
+    MOV AX, CX
+    MOV BX, 2                   
     
-    DIV CX
-    MOV DX, AX 
+    DIV BX
+    MOV CX, AX 
     
-    MOV AX, DX
-    
+         
+    PRINT " ODD "     
     CALL PRINT_NUM_UNS
-    PRINT " "
+    PRINTN     
+    PRINT "=================="
+    PRINTN
     
     JMP STEP_COUNTER_LOOP
               
@@ -72,13 +93,13 @@ IF_CURRENT_STEPS_IS_MAX:
 STEP_COUNTER_LOOP_FINISHER:
     MOV AL, STEPS[0];
     MOV AH, LIMIT[2] 
-    CMP AL, AH 
-    
-    JMP IF_CURRENT_STEPS_IS_MAX;
+    CMP AL, AH
+    JG IF_CURRENT_STEPS_IS_MAX;
+    JMP START
      
     
 STEP_COUNTER_LOOP:
-    CMP DX, 1;
+    CMP CX, 1;
     JE STEP_COUNTER_LOOP_FINISHER;
     JMP EVEN_ODD_CHECKER   
       
